@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #eae8e7;
 }
 
 .App-logo {
@@ -16,6 +17,18 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+html {
+  background-color: #eae8e7;
+}
+
+.space-top {
+  margin-top: 10px;
+}
+
+.form-control {
+  width: 50px !important;
 }
 
 .App-link {

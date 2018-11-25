@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import Matches from './components/Matches';
 
 class App extends Component {
-  render() {
+  /*renderOld() {
     return (
       <div className="App">
         <header className="App-header">
@@ -20,6 +21,16 @@ class App extends Component {
             Learn React
           </a>
         </header>
+      </div>
+    );
+  }*/
+  render() {
+    return (
+      <div className="App">
+        <h1>
+          Welcome to betting!
+        </h1>
+        <Matches></Matches>
       </div>
     );
   }
