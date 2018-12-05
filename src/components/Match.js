@@ -23,28 +23,26 @@ class Match extends Component {
 
   handleClick() {
     this.setState({ isLoading: true, disabled: true });
-    // const url = "https://localhost:3001/transaction/broadcast";
-    const key1 = this.props.match.team1.name;
-    const key2 = this.props.match.team2.name;
-    const data = { playerName: this.props.playerName, match: {} };
-    data.match["id"] = this.props.match.id;
-    data.match[key1] = this.teamInput1.value;
-    data.match[key2] = this.teamInput2.value;
-    console.log(data);
+    const urlToCall = "http://localhost:3001/bet/broadcast";
+    const dataToSend = { playerName: this.props.playerName, matchId: this.props.match.id, teamOneScore: 0, teateamTwoScoremTwo: 0 };
+    dataToSend.teamOneScore = this.teamInput1.value;
+    dataToSend.teamTwoScore = this.teamInput2.value;
 
      // POST the bet to the blockchain
-   /* window.$.post(url, data, function() {
-      setTimeout(() => {
+    window.$.ajax({
+      url: urlToCall, 
+      data: dataToSend, 
+      type: "POST",
+      crossDomain: true,
+      dataType: "json",
+      success: function() {
         // Completed of async action, set loading state back
         this.setState({ isLoading: false });
-      }, 2000);
-    });*/
-
-    // REMOVE after
-    setTimeout(() => {
-      // Completed of async action, set loading state back
-      this.setState({ isLoading: false });
-    }, 2000);
+      }.bind(this),
+      error: function() {
+        console.log( "error" );
+      }
+    });
   }
 
   render() {
