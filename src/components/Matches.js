@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 import Grid from 'react-bootstrap/lib/Grid';
+
+import ch from './assets/images/ch.png';
+import en from './assets/images/en.png';
+import nl from './assets/images/nl.png';
+import pt from './assets/images/pt.png';
 import Match from './Match';
 
 import Row from 'react-bootstrap/lib/Row';
@@ -32,45 +37,24 @@ class Matches extends Component {
     const { disabled } = this.state;
     const matches = [
       {
-        id: "IrSc",
+        id: "PtCh",
         team1: {
-          img: "ir.png",
-          name: "Ireland" 
+          img: pt,
+          name: "Portugal" 
         },
         team2: {
-          img: "sc.png",
-          name: "Scotland" 
+          img: ch,
+          name: "Switzerland" 
         }
       },{
-        id: "NzSa",
+        id: "NlEn",
         team1: {
-          img: "nz.png",
-          name: "New Zealand" 
+          img: nl,
+          name: "Netherlands" 
         },
         team2: {
-          img: "sa.png",
-          name: "South Africa" 
-        }
-      },
-      {
-        id: "FrAr",
-        team1: {
-          img: "fr.png",
-          name: "France" 
-        },
-        team2: {
-          img: "ar.png",
-          name: "Argentina" 
-        }
-      },{
-        id: "AuFi",
-        team1: {
-          img: "au.png",
-          name: "Australia" 
-        },
-        team2: {
-          img: "fi.png",
-          name: "Fiji" 
+          img: en,
+          name: "England" 
         }
       }
     ];
