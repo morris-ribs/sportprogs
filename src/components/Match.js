@@ -39,7 +39,7 @@ class Match extends Component {
       success: function() {
         // Completed of async action, set loading state back
         console.log( "finished" );
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false, disabled: false });
       }.bind(this),
       error: function(err) {
         console.log(err);
@@ -68,7 +68,7 @@ class Match extends Component {
           </Col>
           <Col sm={6}>
             <Button bsStyle="primary" disabled={disabled} onClick={!isLoading ? this.handleClick : null}>
-              {isLoading ? 'Loading...' : disabled ? 'Bet Sent!' : 'Send Bet'}
+              {isLoading ? 'Sending...' : 'Send Bet'}
             </Button>
           </Col>
         </Form>
