@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import pt from './assets/images/pt.png';
-
 import Button from 'react-bootstrap/lib/Button';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -19,7 +17,7 @@ class Match extends Component {
     this.state = {
       match: Object.assign({}, this.props.match),
       isLoading: false,
-      disabled: false
+      disabled: (this.props.playerName === "")
     };
   }
 
@@ -79,6 +77,8 @@ class Match extends Component {
 
 Match.propTypes = {
   match: PropTypes.object.isRequired,
-  playerName: PropTypes.string.isRequired
+  playerName: PropTypes.string.isRequired,
+  teamonescore: PropTypes.number,
+  teamtwoscore: PropTypes.number
 };
 export default Match;

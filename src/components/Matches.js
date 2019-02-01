@@ -23,18 +23,19 @@ class Matches extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.state = {
       match: Object.assign({}, this.props.match),
-      disabled: false
+      disabled: false,
+      playerName: ""
     };
   }
 
   handleClick() {
     if (typeof this.nameInput.value !== "undefined" && this.nameInput.value !== "") {
-      this.setState({ disabled: true });
+      this.setState({ disabled: true, playerName: this.nameInput.value });
     }
   }
   
   render() {
-    const { disabled } = this.state;
+    const { disabled, playerName } = this.state;
     const matches = [
       {
         id: "PtCh",
@@ -65,7 +66,8 @@ class Matches extends Component {
             <Col sm={9}>
               <FormGroup controlId="formPlayerName">
                 <ControlLabel>Name</ControlLabel>{' '}
-                <FormControl type="text" placeholder="Your Name..." disabled={disabled} inputRef={ref => { this.nameInput = ref; }} />
+                <FormControl type="text" placeholder="Your Name..." disabled={disabled} 
+                  inputRef={ref => { this.nameInput = ref; }} />
               </FormGroup>
             </Col>
             <Col sm={3}>
@@ -75,13 +77,13 @@ class Matches extends Component {
             </Col>
           </Form>
         </Row>
-        {disabled ? matches.map((match, index) =>
+        {matches.map((match, index) =>
           <Match
               key={index}
               match={match}
-              playerName={this.nameInput.value}
+              playerName={playerName}
           />
-        ) : ""}
+        )}
       </Grid>
     );
   }
