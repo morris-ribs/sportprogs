@@ -33,6 +33,31 @@ class Matches extends Component {
       this.setState({ disabled: true, playerName: this.nameInput.value });
     }
   }
+
+  /*
+    handleClick() {
+    this.setState({ isLoading: true, disabled: true });
+    const urlToCall = "http://localhost:9000/bet/broadcast";
+    const dataToSend = { playername: this.props.playerName, matchid: this.props.match.id, teamonescore: 0, teamtwoscore: 0 };
+    dataToSend.teamonescore = parseInt(this.teamInput1.value);
+    dataToSend.teamtwoscore = parseInt(this.teamInput2.value);
+
+     // POST the bet to the blockchain
+    window.$.ajax({
+      url: urlToCall, 
+      data: JSON.stringify(dataToSend), 
+      type: "POST",
+      crossDomain: true,
+      success: function() {
+        // Completed of async action, set loading state back
+        console.log( "finished" );
+        this.setState({ isLoading: false, disabled: false });
+      }.bind(this),
+        error: function(err) {
+        console.log(err);
+      }
+    });
+  } */
   
   render() {
     const { disabled, playerName } = this.state;
@@ -61,29 +86,33 @@ class Matches extends Component {
     ];
     return (
       <Grid>
-        <Row className="show-grid space-top matches">
           <Form inline>
-            <Col sm={9}>
-              <FormGroup controlId="formPlayerName">
-                <ControlLabel>Name</ControlLabel>{' '}
-                <FormControl type="text" placeholder="Your Name..." disabled={disabled} 
-                  inputRef={ref => { this.nameInput = ref; }} />
-              </FormGroup>
-            </Col>
-            <Col sm={3}>
-              <Button bsStyle="primary" disabled={disabled} onClick={this.handleClick}>
-                Start Bets
-              </Button>
-            </Col>
+            <Row className="show-grid space-top matches">
+                <Col>
+                  <FormGroup controlId="formPlayerName">
+                    <ControlLabel>Name</ControlLabel>{' '}
+                    <FormControl type="text" placeholder="Your Name..." disabled={disabled} 
+                      inputRef={ref => { this.nameInput = ref; }} />
+                  </FormGroup>
+                </Col>
+            </Row>   
+            <Row className="show-grid space-top">
+              {matches.map((match, index) =>
+                  <Match
+                      key={index}
+                      match={match}
+                      playerName={playerName}
+                  />
+              )} 
+            </Row>        
+            <Row className="show-grid space-top matches">
+                <Col>
+                  <Button bsStyle="primary" disabled={disabled} onClick={this.handleClick}>
+                    Send Bets
+                  </Button>
+                </Col>
+            </Row>
           </Form>
-        </Row>
-        {matches.map((match, index) =>
-          <Match
-              key={index}
-              match={match}
-              playerName={playerName}
-          />
-        )}
       </Grid>
     );
   }
