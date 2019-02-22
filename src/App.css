@@ -27,6 +27,11 @@ html {
   margin-top: 10px;
 }
 
+
+.space-top-100 {
+  margin-top: 100px;
+}
+
 #formPlayerName {
   width: 500px !important;
 }

@@ -22,25 +22,65 @@ class Matches extends Component {
   
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      match: Object.assign({}, this.props.match),
-      disabled: false,
-      playerName: ""
+      disabled: false, loading: false,
+      matches: [
+        {
+          id: "PtCh",
+          team1: {
+            img: pt,
+            name: "Portugal" 
+          },
+          team2: {
+            img: ch,
+            name: "Switzerland" 
+          }
+        },{
+          id: "NlEn",
+          team1: {
+            img: nl,
+            name: "Netherlands" 
+          },
+          team2: {
+            img: en,
+            name: "England" 
+          }
+        }
+      ],
+      playerName: "", forceValues: false
     };
   }
 
   handleClick() {
     if (typeof this.nameInput.value !== "undefined" && this.nameInput.value !== "") {
-      this.setState({ disabled: true, playerName: this.nameInput.value });
+      this.setState({ isLoading: true, disabled: true, playerName: this.nameInput.value });
+    }
+
+    const { matches } = this.state;
+    const matchesUpdated = matches.map(match => {
+     this.sendBetToBlockchain(match, this.nameInput.value);
+      delete(match.teamOneScore);      
+      delete(match.teamTwoScore);
+      window.$("#formInline" + match.id + "1").val("");
+      window.$("#formInline" + match.id + "2").val("");
+      return match;
+    });
+
+    this.setState({ isLoading: false, disabled: false, playerName: "", matches: matchesUpdated, forceValues: true });
+    alert("Bets sent!");
+  }
+
+  handleScoreChange(value, teamToScore) {
+    if (teamToScore === "1") {
+      this.match.teamOneScore = value;
+    } else {
+      this.match.teamTwoScore = value;
     }
   }
 
-  /*
-    handleClick() {
-    this.setState({ isLoading: true, disabled: true });
+  
+  sendBetToBlockchain(match, playerName) {
     const urlToCall = "http://localhost:9000/bet/broadcast";
-    const dataToSend = { playername: this.props.playerName, matchid: this.props.match.id, teamonescore: 0, teamtwoscore: 0 };
-    dataToSend.teamonescore = parseInt(this.teamInput1.value);
-    dataToSend.teamtwoscore = parseInt(this.teamInput2.value);
+    const dataToSend = { playername: playerName, matchid: match.id, teamonescore: match.teamOneScore, teamtwoscore: match.teamTwoScore };
 
      // POST the bet to the blockchain
     window.$.ajax({
@@ -50,69 +90,51 @@ class Matches extends Component {
       crossDomain: true,
       success: function() {
         // Completed of async action, set loading state back
-        console.log( "finished" );
-        this.setState({ isLoading: false, disabled: false });
-      }.bind(this),
-        error: function(err) {
+        console.log("finished");
+      },
+      error: function(err) {
         console.log(err);
       }
     });
-  } */
+  } 
   
   render() {
-    const { disabled, playerName } = this.state;
-    const matches = [
-      {
-        id: "PtCh",
-        team1: {
-          img: pt,
-          name: "Portugal" 
-        },
-        team2: {
-          img: ch,
-          name: "Switzerland" 
-        }
-      },{
-        id: "NlEn",
-        team1: {
-          img: nl,
-          name: "Netherlands" 
-        },
-        team2: {
-          img: en,
-          name: "England" 
-        }
-      }
-    ];
+    const { playerName, matches, disabled, loading, forceValues } = this.state;
+    
+    console.log(matches);
     return (
       <Grid>
-          <Form inline>
-            <Row className="show-grid space-top matches">
-                <Col>
-                  <FormGroup controlId="formPlayerName">
-                    <ControlLabel>Name</ControlLabel>{' '}
-                    <FormControl type="text" placeholder="Your Name..." disabled={disabled} 
-                      inputRef={ref => { this.nameInput = ref; }} />
-                  </FormGroup>
-                </Col>
-            </Row>   
-            <Row className="show-grid space-top">
-              {matches.map((match, index) =>
-                  <Match
-                      key={index}
-                      match={match}
-                      playerName={playerName}
-                  />
-              )} 
-            </Row>        
-            <Row className="show-grid space-top matches">
-                <Col>
-                  <Button bsStyle="primary" disabled={disabled} onClick={this.handleClick}>
-                    Send Bets
-                  </Button>
-                </Col>
-            </Row>
-          </Form>
+        <Form inline>
+          <Row className="show-grid space-top matches">
+            <Col>
+              <FormGroup controlId="formPlayerName">
+                <ControlLabel>Name</ControlLabel>{' '}
+                <FormControl type="text" placeholder="Your Name..." 
+                  inputRef={ref => { this.nameInput = ref; }} value={playerName} 
+                  onChange={() => this.setState({playerName: this.nameInput.value})}/>
+              </FormGroup>
+            </Col>
+          </Row>   
+          <Row className="show-grid space-top">
+            {matches.map((match, index) =>
+              <Match
+                key={index}
+                matchIndex={index}
+                match={match}
+                playerName={playerName}
+                handleScoreChange={this.handleScoreChange}
+                forceValues={forceValues}
+              />
+            )} 
+          </Row>        
+          <Row className="show-grid space-top-100 matches">
+            <Col>
+              <Button bsStyle="primary" onClick={this.handleClick} disabled={disabled}>
+                {loading ? "Sending" : "Send Bets"}
+              </Button>
+            </Col>
+          </Row>
+        </Form>
       </Grid>
     );
   }
