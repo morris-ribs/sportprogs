@@ -99,7 +99,7 @@ class Matches extends Component {
   } 
   
   render() {
-    const { playerName, matches, disabled, loading, forceValues } = this.state;
+    const { playerName, matches, disabled, loading } = this.state;
     
     console.log(matches);
     return (
