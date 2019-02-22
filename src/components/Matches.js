@@ -46,7 +46,7 @@ class Matches extends Component {
           }
         }
       ],
-      playerName: "", forceValues: false
+      playerName: ""
     };
   }
 
@@ -119,11 +119,9 @@ class Matches extends Component {
             {matches.map((match, index) =>
               <Match
                 key={index}
-                matchIndex={index}
                 match={match}
                 playerName={playerName}
                 handleScoreChange={this.handleScoreChange}
-                forceValues={forceValues}
               />
             )} 
           </Row>        

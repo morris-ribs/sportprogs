@@ -50,12 +50,8 @@ class Match extends Component {
 }
 
 Match.propTypes = {
-  matchIndex: PropTypes.number.isRequired,
   match: PropTypes.object.isRequired,
   playerName: PropTypes.string.isRequired,
-  teamonescore: PropTypes.string,
-  teamtwoscore: PropTypes.string,
-  forceValues: PropTypes.bool,
   handleScoreChange: PropTypes.func
 };
 export default Match;
