@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Grid from 'react-bootstrap/lib/Grid';
-
+import '../App.css';
 import ch from './assets/images/ch.png';
 import en from './assets/images/en.png';
 import nl from './assets/images/nl.png';
@@ -100,10 +100,9 @@ class Matches extends Component {
   
   render() {
     const { playerName, matches, disabled, loading } = this.state;
-    
-    console.log(matches);
     return (
       <Grid>
+      <h1>Welcome to betting!</h1>
         <Form inline>
           <Row className="show-grid space-top matches">
             <Col>
