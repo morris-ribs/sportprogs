@@ -33,14 +33,14 @@ class Player extends Component {
           const matchId = bet["match_id"];
           const teamOne = (matchId === "PtCh") ? 
             { img: pt, name: "Portugal" } : { img: nl, name: "Netherlands" };
-          const teamTwo = (matchId === "NlEn") ? 
+          const teamTwo = (matchId === "PtCh") ? 
             { img: ch, name: "Switzerland" } : { img: en, name: "England" };
           return { 
             id: matchId,
             team1: teamOne,
             team2: teamTwo,
-            teamOneScore: bet["team_one_score"],
-            teamTwoScore: bet["team_two_score"]
+            teamOneScore: bet["teamonescore"],
+            teamTwoScore: bet["teamtwoscore"]
           }         
         });
         

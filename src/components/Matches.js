@@ -80,7 +80,8 @@ class Matches extends Component {
   
   sendBetToBlockchain(match, playerName) {
     const urlToCall = "http://localhost:9000/bet/broadcast";
-    const dataToSend = { playername: playerName, matchid: match.id, teamonescore: match.teamOneScore, teamtwoscore: match.teamTwoScore };
+    const dataToSend = { playername: playerName, matchid: match.id, teamonescore: 
+      parseInt(match.teamOneScore), teamtwoscore: parseInt(match.teamTwoScore) };
 
      // POST the bet to the blockchain
     window.$.ajax({
