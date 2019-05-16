@@ -30,10 +30,10 @@ class Player extends Component {
 
     axios.get(urlToCall).then(resp => {
       const matchesToUpdate = resp.data.map(bet => {
-          const matchId = bet["match_id"];
-          const teamOne = (matchId === "PtCh") ? 
+          const matchId = bet["matchid"];
+          const teamOne = (matchId.toLowerCase() === "ptch") ? 
             { img: pt, name: "Portugal" } : { img: nl, name: "Netherlands" };
-          const teamTwo = (matchId === "PtCh") ? 
+          const teamTwo = (matchId.toLowerCase() === "ptch") ? 
             { img: ch, name: "Switzerland" } : { img: en, name: "England" };
           return { 
             id: matchId,
